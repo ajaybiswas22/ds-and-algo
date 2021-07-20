@@ -1,15 +1,25 @@
 # ds-and-algo
 
-Implementing all popular problems of data structures and algorithm
+Implementing all popular problems of data structures and algorithm.
 
 ## Under Development
 
 ### Implemented Algorithms
 
-1. Bubble Sort
-2. Modified Bubble Sort
-3. Recursive Bubble Sort
-4. Insertion Sort
-5. Selection Sort
-6. Quick Sort
-7. Merge Sort
+#### Searching
+
+* Linear Search
+* Binary Search
+* Recursive Depth First Search (DFS)
+* Iterative Breadth First Search (BFS)
+
+#### Sorting
+
+* Bubble Sort
+* Modified Bubble Sort
+* Recursive Bubble Sort
+* Insertion Sort
+* Selection Sort
+* Quick Sort
+* Merge Sort
+* Radix Sort
