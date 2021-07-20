@@ -100,14 +100,14 @@ std::vector<int> bucketToArray(std::vector<std::vector<int>> buckets)
  * @param base Base of number system
  * @return void
  */
-void radixSort(std::vector<int> &A,int base)
+void radixSort(std::vector<int> &A)
 {
     int n = A.size();
     int digits = maxDigits(A);
 
     for(int i=0;i<digits;i++)           // looping through digit position  
     {
-        std::vector<std::vector<int>> buckets(base);        // creating buckets to hold numbers
+        std::vector<std::vector<int>> buckets(10);        // creating buckets to hold numbers
 
         for(int j=0;j<n;j++)            // inserts in bucket digit wise
         {
@@ -127,9 +127,9 @@ void radixSort(std::vector<int> &A,int base)
 // main function
 int main(void)
 {
-    std::vector<int> A = {207, 411, 105, 10, 19, 61, 3, 15, 25};
+    std::vector<int> A = {25,56,9,127,765,340,52,72,19};
     std::cout << "Original: ";
     printVector(A);
-    radixSort(A,10);
+    radixSort(A);
     printVector(A);
 }
