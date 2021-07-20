@@ -101,7 +101,7 @@ void quickSort(std::vector<int> &A, int low, int high)
     {
         k = partition(A, low, high); // A[k] is at right position
 
-        // Divide and Conquer: O(n/2) at each step
+        // Divide and Conquer: O(k) + O(n-k)
         quickSort(A, low, k - 1);  // apply quicksort on 1st half
         quickSort(A, k + 1, high); // apply quicksort on 2nd halt
     }
