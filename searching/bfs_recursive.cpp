@@ -1,5 +1,5 @@
 /**
- * @brief Program to implement Iterative Breadth First Search
+ * @brief Program to implement Breadth First Search (BFS)
  * @author Ajay Biswas
  *
  */
@@ -21,40 +21,40 @@ void insert(std::vector<std::vector<int>> &V, int a, int b)
 }
 
 /**
- * Iterative Breadth First Search
- * 
+ * Recursive Breadth First Search
  * Worst Case Time Complexity: O(V+E)
  * Type: Adjacency List
  *
  * @param V Vector representing adjacency list
- * @param current Current node
+ * @param queue Queue holding nodes
  * @param size Number of Nodes in the graph
  * @return void
  */
-void bfsIterative(std::vector<std::vector<int>> &V, int current, int size)
+void bfs(std::vector<std::vector<int>> &V, std::queue<int> &queue, int size)
 {
     static std::vector<int> visited(size, 0);
-    std::queue<int> queue;               // bfs requires queue data structure
 
-    queue.push(current);
-    visited[current] = 1; // current node is visited
-
-    while (!queue.empty()) // repeat until queue is not empty
+    if (queue.empty()) // stop process if queue is empty
     {
-        int value = queue.front(); // current node
-        queue.pop();
+        return;
+    }
 
-        std::cout << value << " ";
+    int value = queue.front(); // current node
+    queue.pop();
 
-        for (int i = 0; i < V[value].size(); i++)
+    visited[value] = 1; // current node is visited
+    std::cout << value << " ";
+
+    for (int i = 0; i < V[value].size(); i++) // push all adjacent nodes in the queue
+    {
+        if (!visited[V[value][i]])
         {
-            if (!visited[V[value][i]]) // push unvisited node in queue
-            {
-                queue.push(V[value][i]);
-                visited[V[value][i]] = 1; // mark node visited
-            }
+            visited[V[value][i]] = 1;
+            queue.push(V[value][i]);
         }
     }
+
+    bfs(V, queue, size); // call bfs
 }
 
 int main()
@@ -62,6 +62,8 @@ int main()
     int start = 0;
     int size = 5;
     std::vector<std::vector<int>> v(size);
+    std::queue<int> queue;
+
     insert(v, 0, 1);
     insert(v, 0, 2);
     insert(v, 1, 3);
@@ -70,7 +72,9 @@ int main()
     insert(v, 2, 0);
     insert(v, 3, 1);
     insert(v, 4, 1);
-    bfsIterative(v, start, size);
+
+    queue.push(start); // Initialize queue with start node
+    bfs(v, queue, size);
 
     return 0;
 }

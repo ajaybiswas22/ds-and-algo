@@ -1,11 +1,11 @@
 /**
- * @brief Program to implement Iterative Breadth First Search
+ * @brief Program to implement Iterative Depth First Search (DFS)
  * @author Ajay Biswas
  *
  */
 #include <iostream>
 #include <vector>
-#include <queue>
+#include <stack>
 
 /**
  * Making adjacency list by adding adjacent elements
@@ -21,8 +21,7 @@ void insert(std::vector<std::vector<int>> &V, int a, int b)
 }
 
 /**
- * Iterative Breadth First Search
- * 
+ * Iterative Depth First Search
  * Worst Case Time Complexity: O(V+E)
  * Type: Adjacency List
  *
@@ -31,30 +30,32 @@ void insert(std::vector<std::vector<int>> &V, int a, int b)
  * @param size Number of Nodes in the graph
  * @return void
  */
-void bfsIterative(std::vector<std::vector<int>> &V, int current, int size)
+void dfsIterative(std::vector<std::vector<int>> &V, int current, int size)
 {
     static std::vector<int> visited(size, 0);
-    std::queue<int> queue;               // bfs requires queue data structure
+    std::stack<int> st;
 
-    queue.push(current);
-    visited[current] = 1; // current node is visited
+    st.push(current);       // inserted first element
 
-    while (!queue.empty()) // repeat until queue is not empty
+    while(!st.empty())      // repeat until stack is not empty
     {
-        int value = queue.front(); // current node
-        queue.pop();
+        int value = st.top();   // get top of the stack
+        st.pop();
 
-        std::cout << value << " ";
-
-        for (int i = 0; i < V[value].size(); i++)
+        if(!visited[value])     // print the node
         {
-            if (!visited[V[value][i]]) // push unvisited node in queue
+            std::cout<<value<<" ";
+            visited[value] = true;
+        }
+        
+        for(int i=0;i<V[value].size();i++)      // discover all adjacent nodes
+        {
+            if(!visited[V[value][i]])
             {
-                queue.push(V[value][i]);
-                visited[V[value][i]] = 1; // mark node visited
+                st.push(V[value][i]);
             }
         }
-    }
+    } 
 }
 
 int main()
@@ -70,7 +71,7 @@ int main()
     insert(v, 2, 0);
     insert(v, 3, 1);
     insert(v, 4, 1);
-    bfsIterative(v, start, size);
+    dfsIterative(v, start, size);
 
     return 0;
 }

@@ -8,10 +8,10 @@ Implementing all popular problems of data structures and algorithm.
 
 #### Searching
 
-* Linear Search
-* Binary Search
-* Recursive Depth First Search (DFS)
-* Iterative Breadth First Search (BFS)
+* Linear Search (Iterative and Recursive)
+* Binary Search	(Iterative and Recursive)
+* Depth First Search (Iterative and Recursive)
+* Breadth First Search (Iterative and Recursive)
 
 #### Sorting
 
