@@ -12,72 +12,88 @@ class Node
     public:
     T data;
     Node* next;
+    Node* prev;
 };
 
 /**
- * Prints elements of a linked list
+ * Prints elements of a Doubly linked list
  *
  * @tparam head Start of the list
+ * @tparam tail End of the List
+ * @param reverse If true, then the list will be printed in reverse
  * @return void
  */
 template<class T>
-void printList(Node<T>* head)
+void printListDoubly(Node<T>* head, Node<T>* tail, bool reverse = false)
 {
     if(head == nullptr)
     {
         std::cerr<<"List is empty\n";
         return;
     }
-    Node<T>* trav = head;
 
-    while(trav != nullptr)
+    if(reverse == false)
     {
-        std::cout<<trav->data<<" ";
-        trav = trav->next;
+        Node<T>* trav = head;
+        while(trav != nullptr)
+        {
+            std::cout<<trav->data<<" ";
+            trav = trav->next;
+        }
     }
+    else
+    {
+        Node<T>* trav = tail;
+        while(trav != nullptr)
+        {
+            std::cout<<trav->data<<" ";
+            trav = trav->prev;
+        }
+    }
+    
     std::cout<<"\n";
 }
 
 /**
- * Creates a new Node for Singly Linked List
+ * Creates a new Node for Double Linked List
  *
  * @tparam value Value to be inserted
  * @return Node of Type T
  */
 template<class T>
-Node<T>* newNode(T value)
+Node<T>* newNodeD(T value)
 {
     Node<T>* temp = new Node<T>();
     temp->data = value;
     temp->next = nullptr;
+    temp->prev = nullptr;
     return temp;
 }
 
 /**
- * Insert elements at the end of a Linked List
+ * Insert elements at the end of a Doubly Linked List
  *
- * @tparam head Start of the list
+ * @tparam head Start of the List
+ * @tparam tail End of the List
  * @tparam value Value to be inserted
  * @return void
  */
 template<class T>
-void insertEnd(Node<T>* &head, T value)
+void insertEnd(Node<T>* &head, Node<T>* &tail, T value)
 {
-    Node<T>* temp = newNode(value);
+    Node<T>* temp = newNodeD(value);
 
-    Node<T>* trav = head;
-
-    if(trav == nullptr)
+    if(head == nullptr)
     {
         head = temp;
+        tail = temp;
     }
     else
     {
-        while(trav->next != nullptr)
-        {
-            trav = trav->next;
-        }
-        trav->next = temp;
+        Node<int>* previous = tail;
+        tail->next = temp;
+        tail = temp;
+        tail->prev = previous;
     }
 }
 
@@ -85,16 +101,27 @@ void insertEnd(Node<T>* &head, T value)
  * Insert elements at the start of a Linked List
  *
  * @tparam head Start of the list
+ * @tparam tail End of the List
  * @tparam value Value to be inserted
  * @return void
  */
 template<class T>
-void insertBeg(Node<T>* &head, T value)
+void insertBeg(Node<T>* &head, Node<T>* &tail, T value)
 {
-    Node<T>* temp = newNode(value);
+    Node<T>* temp = newNodeD(value);
 
-    temp->next = head;
-    head = temp;
+    if(head == nullptr)
+    {
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        Node<int>* after = head;
+        head->prev = temp;
+        head = temp;
+        head->next = after;
+    }
 }
 
 /**
@@ -102,12 +129,13 @@ void insertBeg(Node<T>* &head, T value)
  * of a linked list
  *
  * @tparam head Start of the list
+ * @tparam tail End of the List
  * @param index Position to be inserted starting from 0
  * @tparam value Value to be inserted
  * @return void
  */
 template<class T>
-void insertAt(Node<T>* &head, int index, T value)
+void insertAt(Node<T>* &head, Node<T>* &tail, int index, T value)
 {
     if(index < 0)              
     {
@@ -116,11 +144,11 @@ void insertAt(Node<T>* &head, int index, T value)
     }
     else if(index == 0)                 // same as insert at beginning
     {
-        insertBeg(head,value);
+        insertBeg(head,tail,value);
         return;
     }
 
-    Node<T>* temp = newNode(value);
+    Node<T>* temp = newNodeD(value);
 
     Node<T>* trav = head;
     int count = 0;
@@ -136,7 +164,9 @@ void insertAt(Node<T>* &head, int index, T value)
     if(count == index-1)                // trav-next is at index 
     {
         trav->next = temp;
+        temp->prev = trav;
         temp->next = behind;
+        behind->prev = temp;
     }
     else
     {
@@ -147,13 +177,14 @@ void insertAt(Node<T>* &head, int index, T value)
 }
 
 /**
- * Delete elements from the end of a Singly Linked List
+ * Delete elements from the end of a Doubly Linked List
  *
  * @tparam head Start of the List
+ * @tparam tail End of the List
  * @return void
  */
 template<class T>
-void deleteEnd(Node<T>* &head)
+void deleteEnd(Node<T>* &head, Node<T>*  &tail)
 {
     if(head == nullptr)
     {
@@ -161,35 +192,33 @@ void deleteEnd(Node<T>* &head)
         return;
     }
 
-    if(head->next == nullptr)
+    if(tail->prev == nullptr)
     {
-        Node<T>* temp = head;
+        Node<T>* temp = tail;
+        
         head = nullptr;
+        tail = nullptr;
         free(temp);
-        return;
     }
-
-    Node<T>* trav = head;
-    Node<T>* prev = trav;
-
-    while(trav->next != nullptr)
+    else
     {
-        prev = trav;
-        trav = trav->next;
-    }
+        Node<T>* temp = tail;        
+        tail = tail->prev;
+        tail->next = nullptr;
 
-    prev->next = nullptr;
-    free(trav);
+        free(temp);
+    }
 }
 
 /**
- * Delete elements from the beginning of a Singly Linked List
+ * Delete elements from the beginning of a Doubly Linked List
  *
  * @tparam head Start of the List
+ * @tparam tail End of the List
  * @return void
  */
 template<class T>
-void deleteBeg(Node<T>* &head)
+void deleteBeg(Node<T>* &head, Node<T>* &tail)
 {
     if(head == nullptr)
     {
@@ -202,26 +231,29 @@ void deleteBeg(Node<T>* &head)
         Node<T>* temp = head;
         
         head = nullptr;
+        tail = nullptr;
         free(temp);
     }
     else
     {
         Node<T>* temp = head;        
         head = head->next;
+        head->prev = nullptr;
 
         free(temp);
     }
 }
 
 /**
- * Delete elements from the secified index of a Singly Linked List
+ * Delete elements from the secified index of a Doubly Linked List
  *
  * @tparam head Start of the List
+ * @tparam tail End of the List
  * @param index Index to be deleted
  * @return void
  */
 template<class T>
-void deleteAt(Node<T>* &head, int index)
+void deleteAt(Node<T>* &head, Node<T>* &tail, int index)
 {
     if(head == nullptr)
     {
@@ -231,7 +263,7 @@ void deleteAt(Node<T>* &head, int index)
 
     if(index == 0)
     {
-        deleteBeg(head);
+        deleteBeg(head,tail);
         return;
     }
     if(index < 0)              
@@ -241,20 +273,24 @@ void deleteAt(Node<T>* &head, int index)
     }
 
     Node<T>* trav = head;
-    Node<T>* prev = trav;
     int count = 0;
 
     while(trav->next != nullptr && count < index)
     {
-        prev = trav;
         trav = trav->next;
         count++;
     }
 
-    if(count == index)
+    if(count == index && trav->next != nullptr)
     {
-        prev->next = trav->next;
+        trav->prev->next = trav->next;
+        trav->next->prev = trav->prev;
         free(trav);
+    }
+    else if(count == index && trav->next == nullptr)
+    {
+        deleteEnd(head,tail);
+        return;
     }
     else
     {
@@ -264,15 +300,18 @@ void deleteAt(Node<T>* &head, int index)
 
 }
 
+
 int main()
 {
     Node<int>* head = nullptr;
-    insertEnd(head,1);
-    insertEnd(head,2);
-    insertEnd(head,3);
-    deleteAt(head,2);
+    Node<int>* tail = nullptr;
+    insertBeg(head,tail,1);
+    insertEnd(head,tail,2);
+    insertEnd(head,tail,3);
+    
+    deleteAt(head,tail,4);
 
-    printList(head);
+    printListDoubly(head,tail,true);
 
     return 0;
 }
