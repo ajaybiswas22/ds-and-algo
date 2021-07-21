@@ -23,6 +23,11 @@ class Node
 template<class T>
 void printList(Node<T>* head)
 {
+    if(head == nullptr)
+    {
+        std::cerr<<"List is empty\n";
+        return;
+    }
     Node<T>* trav = head;
 
     while(trav != nullptr)
@@ -132,20 +137,113 @@ void insertAt(Node<T>* &head, int index, T value)
     
 }
 
+template<class T>
+void deleteEnd(Node<T>* &head)
+{
+    if(head == nullptr)
+    {
+        std::cerr<<"No node to Delete (List Empty)\n";
+        return;
+    }
+
+    if(head->next == nullptr)
+    {
+        Node<T>* temp = head;
+        head = nullptr;
+        free(temp);
+        return;
+    }
+
+    Node<T>* trav = head;
+    Node<T>* prev = trav;
+
+    while(trav->next != nullptr)
+    {
+        prev = trav;
+        trav = trav->next;
+    }
+
+    prev->next = nullptr;
+    free(trav);
+}
+
+template<class T>
+void deleteBeg(Node<T>* &head)
+{
+    if(head == nullptr)
+    {
+        std::cerr<<"No node to Delete (List Empty)\n";
+        return;
+    }
+
+    if(head->next == nullptr)
+    {
+        Node<T>* temp = head;
+        
+        head = nullptr;
+        free(temp);
+    }
+    else
+    {
+        Node<T>* temp = head;        
+        head = head->next;
+
+        free(temp);
+    }
+}
+
+template<class T>
+void deleteAt(Node<T>* &head, int index)
+{
+    if(head == nullptr)
+    {
+        std::cerr<<"No node to Delete (List Empty)\n";
+        return;
+    }
+
+    if(index == 0)
+    {
+        deleteBeg(head);
+        return;
+    }
+    if(index < 0)              
+    {
+        std::cerr<<"Wrong index\n";
+        return;
+    }
+
+    Node<T>* trav = head;
+    Node<T>* prev = trav;
+    int count = 0;
+
+    while(trav->next != nullptr && count < index)
+    {
+        prev = trav;
+        trav = trav->next;
+        count++;
+    }
+
+    if(count == index)
+    {
+        prev->next = trav->next;
+        free(trav);
+    }
+    else
+    {
+        std::cerr<<"Wrong index\n";
+        return;
+    }
+
+}
+
 
 int main()
 {
     Node<int>* head = nullptr;
-
     insertEnd(head,1);
     insertEnd(head,2);
     insertEnd(head,3);
-    insertEnd(head,4);
-    insertEnd(head,5);
-    insertEnd(head,6);
-    insertEnd(head,7);
-
-    insertAt(head,6,-1);
+    deleteAt(head,-1);
 
     printList(head);
 
