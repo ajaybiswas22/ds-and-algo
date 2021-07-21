@@ -4,6 +4,13 @@ Implementing all popular problems of data structures and algorithm.
 
 ## Under Development
 
+### Implemented Data Structure
+
+#### Linked List
+
+* Singly Linked List
+* Doubly Linked List
+
 ### Implemented Algorithms
 
 #### Searching

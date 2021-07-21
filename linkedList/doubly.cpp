@@ -1,5 +1,5 @@
 /**
- * @brief Program to implement generic singly linked list
+ * @brief Program to implement generic Doubly Linked List
  * @author Ajay Biswas
  *
  */
