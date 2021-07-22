@@ -19,6 +19,7 @@ Implementing all popular problems of data structures and algorithm.
 * Binary Search	(Iterative and Recursive)
 * Depth First Search (Iterative and Recursive)
 * Breadth First Search (Iterative and Recursive)
+* Finding number of Islands using DFS
 
 #### Sorting
 
