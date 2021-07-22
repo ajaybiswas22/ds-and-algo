@@ -1,5 +1,5 @@
 /**
- * @brief Program to implement Bubble Sort.
+ * @brief Program to implement Radix Sort on Decimal Numbers
  * @author Ajay Biswas
  *
  */
@@ -39,10 +39,10 @@ void printVector(std::vector<T> A)
 }
 
 /**
- * Finds maximum digits amonng the elements
+ * Finds maximum digits among the elements
  *
- * @param A Vector containing some elements
- * @return Integer denoting number of digits.
+ * @param A Vector containing some elements with varying no. of digits
+ * @return int Index of an element if found, else -1.
  */
 int maxDigits(std::vector<int> A)
 {

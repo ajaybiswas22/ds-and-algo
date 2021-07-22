@@ -30,7 +30,7 @@ void printVector(std::vector<T> A)
  *
  * @param A vector containing sorted elements
  * @param key item to be searched
- * @return Integer denoting index, -1 if not found
+ * @return int Index of an element if found, else -1.
  */
 int binarySearch(std::vector<int> A, int low, int high, int key)
 {
