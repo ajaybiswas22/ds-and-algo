@@ -85,7 +85,7 @@ int partition(std::vector<int> &A, int low, int high)
  * Sorts a vector of elements in ascending order using Quick Sort.
  * Worst case Time Complexity: O(n^2)
  * Best case, Average case Time Complexity: O(nlogn)
- * Worst case Space Complexity: O(n)
+ * Worst case Space Complexity: O(1)
  * Type: In-place, Not Stable
  *
  * @param A vector containing unsorted elements
