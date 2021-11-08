@@ -48,7 +48,7 @@ void printVector(std::vector<T> A)
  * @param high Last position of sub-array
  * @return Integer denoting the position of partition 
  */
-int partition_3_way(std::vector<int> &a, int low, int high, int &i, int &j)
+void partition_3_way(std::vector<int> &a, int low, int high, int &i, int &j)
 {
     // To handle 2 elements
     if (high - low <= 1) {
